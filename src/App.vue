@@ -1,28 +1,74 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <AddTodo v-on:add-todo="addTodo" />
+    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/layout/Header';
+import AddTodo from './components/AddTodo';
+import Todos from './components/Todos';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    AddTodo,
+    Todos,
+  },
+  data() {
+    return {
+      todos: [],
+    };
+  },
+  methods: {
+    deleteTodo(id) {
+      this.todos = this.todos.filter(todo => todo.id !== id);
+    },
+    addTodo(newTodo) {
+      this.todos = [...this.todos, newTodo];
+    },
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+* {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.Container {
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+  margin-top: 1rem;
+  background: royalblue;
+  color: white;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-family: inherit;
+}
+
+.btn:hover {
+  opacity: 0.8;
 }
 </style>
